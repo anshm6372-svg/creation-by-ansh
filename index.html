@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Creation by Ansh</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#080b12;
+    color:white;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(8,11,18,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #202635;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:#6c63ff;
+}
+
+/* SEARCH */
+
+.searchBox{
+    flex:1;
+    max-width:500px;
+    position:relative;
+}
+
+.searchBox input{
+    width:100%;
+    padding:13px 45px 13px 18px;
+    border-radius:30px;
+    border:1px solid #303747;
+    outline:none;
+    background:#121722;
+    color:white;
+    font-size:15px;
+}
+
+.searchBox input:focus{
+    border-color:#6c63ff;
+}
+
+.searchIcon{
+    position:absolute;
+    right:17px;
+    top:12px;
+}
+
+/* HERO */
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:70px 20px 50px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:clamp(38px,8vw,75px);
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:#746cff;
+}
+
+.hero p{
+    color:#aab2c5;
+    max-width:650px;
+    margin:auto;
+    line-height:1.6;
+    font-size:16px;
+}
+
+.uploadBtn{
+    display:inline-block;
+    margin-top:28px;
+    padding:14px 25px;
+    background:#6c63ff;
+    color:white;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.uploadBtn:hover{
+    transform:translateY(-2px);
+    background:#8179ff;
+}
+
+#photoInput{
+    display:none;
+}
+
+/* TOPICS */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.sectionTitle{
+    margin:20px 0;
+    font-size:27px;
+}
+
+.topics{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:12px;
+}
+
+.topic{
+    flex:0 0 auto;
+    padding:10px 18px;
+    background:#151a27;
+    border:1px solid #292f40;
+    border-radius:25px;
+    color:#cbd2e3;
+    cursor:pointer;
+}
+
+.topic.active,
+.topic:hover{
+    background:#6c63ff;
+    color:white;
+}
+
+/* GALLERY */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:17px;
+    padding-bottom:50px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    background:#121722;
+    border:1px solid #252c3c;
+    min-height:200px;
+}
+
+.card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    display:block;
+    transition:.4s;
+}
+
+.card:hover img{
+    transform:scale(1.06);
+}
+
+.cardInfo{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:25px 12px 12px;
+    background:linear-gradient(transparent,rgba(0,0,0,.9));
+}
+
+.cardTitle{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.cardTopic{
+    color:#aeb6c9;
+    font-size:12px;
+}
+
+.like{
+    position:absolute;
+    right:10px;
+    top:10px;
+    width:38px;
+    height:38px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.6);
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.like.liked{
+    color:#ff4d6d;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#8f98aa;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:500;
+    background:rgba(0,0,0,.9);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal img{
+    max-width:95%;
+    max-height:90vh;
+    object-fit:contain;
+    border-radius:15px;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    width:45px;
+    height:45px;
+    border:0;
+    border-radius:50%;
+    background:#222938;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+}
+
+/* UPLOAD FORM */
+
+.uploadPanel{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:400;
+    background:rgba(0,0,0,.75);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.uploadPanel.show{
+    display:flex;
+}
+
+.uploadBox{
+    width:100%;
+    max-width:450px;
+    background:#121722;
+    border:1px solid #30384b;
+    border-radius:22px;
+    padding:25px;
+}
+
+.uploadBox h2{
+    margin-bottom:20px;
+}
+
+.uploadBox input,
+.uploadBox select{
+    width:100%;
+    padding:13px;
+    margin-bottom:12px;
+    background:#0b0f17;
+    color:white;
+    border:1px solid #303747;
+    border-radius:10px;
+    outline:none;
+}
+
+.preview{
+    width:100%;
+    max-height:200px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:15px;
+    display:none;
+}
+
+.formButtons{
+    display:flex;
+    gap:10px;
+}
+
+.formButtons button{
+    flex:1;
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.saveBtn{
+    background:#6c63ff;
+    color:white;
+}
+
+.cancelBtn{
+    background:#292f3d;
+    color:white;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #202635;
+    padding:30px 20px;
+    text-align:center;
+    color:#7f899d;
+}
+
+footer strong{
+    color:#6c63ff;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:650px){
+
+    .navbar{
+        flex-wrap:wrap;
+    }
+
+    .logo{
+        width:100%;
+        text-align:center;
+    }
+
+    .searchBox{
+        max-width:none;
+        width:100%;
+    }
+
+    .hero{
+        padding-top:45px;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .card img{
+        height:220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <div class="logo">
+            Creation <span>by Ansh</span>
+        </div>
+
+        <div class="searchBox">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search photos, topics..."
+            >
+            <span class="searchIcon">🔎</span>
+        </div>
+
+    </div>
+</header>
+
+
+<section class="hero">
+
+    <h1>
+        Creation <span>by Ansh</span>
+    </h1>
+
+    <p>
+        Discover beautiful creations, amazing photos and creative ideas.
+        Explore different topics and share your own creations.
+    </p>
+
+    <label class="uploadBtn" for="photoInput">
+        ⬆️ Upload Your Photo
+    </label>
+
+    <input
+        type="file"
+        id="photoInput"
+        accept="image/*"
+    >
+
+</section>
+
+
+<main class="container">
+
+    <h2 class="sectionTitle">
+        Explore Topics
+    </h2>
+
+    <div class="topics">
+
+        <div class="topic active" data-topic="All">
+            All
+        </div>
+
+        <div class="topic" data-topic="Nature">
+            🌿 Nature
+        </div>
+
+        <div class="topic" data-topic="Cars">
+            🚗 Cars
+        </div>
+
+        <div class="topic" data-topic="Cricket">
+            🏏 Cricket
+        </div>
+
+        <div class="topic" data-topic="AI Art">
+            🤖 AI Art
+        </div>
+
+        <div class="topic" data-topic="Portrait">
+            👤 Portrait
+        </div>
+
+        <div class="topic" data-topic="Travel">
+            🌍 Travel
+        </div>
+
+        <div class="topic" data-topic="Other">
+            ✨ Other
+        </div>
+
+    </div>
+
+
+    <h2 class="sectionTitle">
+        Best Photos
+    </h2>
+
+    <div id="gallery" class="gallery"></div>
+
+    <div id="empty" class="empty">
+        No photos found.
+    </div>
+
+</main>
+
+
+<!-- UPLOAD PANEL -->
+
+<div id="uploadPanel" class="uploadPanel">
+
+    <div class="uploadBox">
+
+        <h2>Upload Creation</h2>
+
+        <img id="preview" class="preview">
+
+        <input
+            type="text"
+            id="photoTitle"
+            placeholder="Photo title"
+        >
+
+        <select id="photoTopic">
+
+            <option value="Nature">Nature</option>
+            <option value="Cars">Cars</option>
+            <option value="Cricket">Cricket</option>
+            <option value="AI Art">AI Art</option>
+            <option value="Portrait">Portrait</option>
+            <option value="Travel">Travel</option>
+            <option value="Other">Other</option>
+
+        </select>
+
+        <div class="formButtons">
+
+            <button
+                class="cancelBtn"
+                onclick="closeUpload()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="saveBtn"
+                onclick="savePhoto()"
+            >
+                Add Photo
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- IMAGE MODAL -->
+
+<div id="imageModal" class="modal">
+
+    <button
+        class="close"
+        onclick="closeImage()"
+    >
+        ×
+    </button>
+
+    <img id="modalImage">
+
+</div>
+
+
+<footer>
+    © 2026 <strong>Creation by Ansh</strong>
+    — Made with creativity ❤️
+</footer>
+
+
+<script>
+
+/* =========================
+   SAMPLE PHOTOS
+========================= */
+
+let photos = [
+
+    {
+        title:"Beautiful Mountain",
+        topic:"Nature",
+        image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+        title:"Luxury Car",
+        topic:"Cars",
+        image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+        title:"Amazing Cricket",
+        topic:"Cricket",
+        image:"https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+        title:"Creative Portrait",
+        topic:"Portrait",
+        image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+        title:"AI Creative Art",
+        topic:"AI Art",
+        image:"https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80"
+    },
+
+    {
+        title:"Travel World",
+        topic:"Travel",
+        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80"
+    }
+
+];
+
+
+/* =========================
+   LOCAL STORAGE
+========================= */
+
+try{
+
+    let saved =
+        JSON.parse(localStorage.getItem("creationByAnsh"));
+
+    if(saved && Array.isArray(saved)){
+        photos = saved.concat(photos);
+    }
+
+}catch(error){
+
+    console.log("Storage unavailable");
+
+}
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let selectedTopic = "All";
+let selectedFile = null;
+
+
+/* =========================
+   DISPLAY PHOTOS
+========================= */
+
+function displayPhotos(){
+
+    const gallery =
+        document.getElementById("gallery");
+
+    const empty =
+        document.getElementById("empty");
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    gallery.innerHTML = "";
+
+    let filtered = photos.filter(photo => {
+
+        const topicMatch =
+            selectedTopic === "All" ||
+            photo.topic === selectedTopic;
+
+        const searchMatch =
+            photo.title.toLowerCase().includes(search) ||
+            photo.topic.toLowerCase().includes(search);
+
+        return topicMatch && searchMatch;
+
+    });
+
+
+    if(filtered.length === 0){
+
+        empty.style.display = "block";
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    filtered.forEach((photo,index)=>{
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+
+        card.innerHTML = `
+
+            <img
+                src="${photo.image}"
+                alt="${photo.title}"
+                onclick="openImage('${photo.image}')"
+            >
+
+            <button
+                class="like"
+                onclick="likePhoto(this,event)"
+            >
+                ♡
+            </button>
+
+            <div class="cardInfo">
+
+                <div class="cardTitle">
+                    ${escapeHTML(photo.title)}
+                </div>
+
+                <div class="cardTopic">
+                    ${escapeHTML(photo.topic)}
+                </div>
+
+            </div>
+        `;
+
+
+        gallery.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document
+.getElementById("searchInput")
+.addEventListener("input",displayPhotos);
+
+
+/* =========================
+   TOPICS
+========================= */
+
+document
+.querySelectorAll(".topic")
+.forEach(topic => {
+
+    topic.addEventListener("click",()=>{
+
+        document
+        .querySelectorAll(".topic")
+        .forEach(t=>t.classList.remove("active"));
+
+        topic.classList.add("active");
+
+        selectedTopic =
+            topic.dataset.topic;
+
+        displayPhotos();
+
+    });
+
+});
+
+
+/* =========================
+   UPLOAD FILE
+========================= */
+
+document
+.getElementById("photoInput")
+.addEventListener("change",function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")){
+
+        alert("Please select an image.");
+
+        return;
+
+    }
+
+    selectedFile = file;
+
+    const reader =
+        new FileReader();
+
+    reader.onload = function(e){
+
+        document
+        .getElementById("preview")
+        .src = e.target.result;
+
+        document
+        .getElementById("preview")
+        .style.display = "block";
+
+        document
+        .getElementById("uploadPanel")
+        .classList.add("show");
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+/* =========================
+   SAVE PHOTO
+========================= */
+
+function savePhoto(){
+
+    if(!selectedFile) return;
+
+
+    const title =
+        document
+        .getElementById("photoTitle")
+        .value
+        .trim() || "My Creation";
+
+
+    const topic =
+        document
+        .getElementById("photoTopic")
+        .value;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e){
+
+        const newPhoto = {
+
+            title:title,
+
+            topic:topic,
+
+            image:e.target.result
+
+        };
+
+
+        photos.unshift(newPhoto);
+
+
+        /*
+        Save only uploaded photos.
+        */
+
+        try{
+
+            let uploaded =
+                JSON.parse(
+                    localStorage.getItem(
+                        "creationByAnsh"
+                    )
+                ) || [];
+
+            uploaded.unshift(newPhoto);
+
+            localStorage.setItem(
+                "creationByAnsh",
+                JSON.stringify(uploaded)
+            );
+
+        }catch(error){
+
+            alert(
+                "Browser storage is full. Photo was added temporarily."
+            );
+
+        }
+
+
+        displayPhotos();
+
+        closeUpload();
+
+    };
+
+
+    reader.readAsDataURL(selectedFile);
+
+}
+
+
+/* =========================
+   CLOSE UPLOAD
+========================= */
+
+function closeUpload(){
+
+    document
+    .getElementById("uploadPanel")
+    .classList.remove("show");
+
+    document
+    .getElementById("preview")
+    .style.display = "none";
+
+    document
+    .getElementById("photoInput")
+    .value = "";
+
+    document
+    .getElementById("photoTitle")
+    .value = "";
+
+    selectedFile = null;
+
+}
+
+
+/* =========================
+   IMAGE VIEWER
+========================= */
+
+function openImage(src){
+
+    document
+    .getElementById("modalImage")
+    .src = src;
+
+    document
+    .getElementById("imageModal")
+    .classList.add("show");
+
+}
+
+
+function closeImage(){
+
+    document
+    .getElementById("imageModal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   LIKE
+========================= */
+
+function likePhoto(button,event){
+
+    event.stopPropagation();
+
+    button.classList.toggle("liked");
+
+    button.textContent =
+        button.classList.contains("liked")
+        ? "♥"
+        : "♡";
+
+}
+
+
+/* =========================
+   SECURITY HELPER
+========================= */
+
+function escapeHTML(text){
+
+    return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+displayPhotos();
+
+</script>
+
+</body>
+</html>n
